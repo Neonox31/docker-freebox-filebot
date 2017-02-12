@@ -54,8 +54,8 @@ ADD filebot.conf /files/filebot.conf
 RUN chmod a+wx /files/filebot.conf
 ADD freebox.sh /files/freebox.sh
 RUN chmod a+wx /files/freebox.sh
-ADD freebox.conf /files/freebox.conf
-RUN chmod a+wx /files/freebox.conf
+#ADD freebox.conf /files/freebox.conf
+#RUN chmod a+wx /files/freebox.conf
 ADD freeboxos_bash_api.sh /files/freeboxos_bash_api.sh
 RUN chmod a+wx /files/freeboxos_bash_api.sh
 
