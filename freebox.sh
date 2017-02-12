@@ -44,7 +44,7 @@ if authorize_application; then
     cp "/freebox//$file" "/completed/$file"
   done
   echo "$(ts) Start filebot script"
-  /files/runas.sh $USER_ID $GROUP_ID $UMASK /files/filebot.sh &
+  /files/runas.sh $USER_ID $GROUP_ID $UMASK /files/filebot.sh
   exit 0
  fi
 else
