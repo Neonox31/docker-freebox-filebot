@@ -10,7 +10,7 @@ function authorize_application {
  if [ ! -f /config/freebox_auth.conf ] || [ ! -s /config/freebox_auth.conf ]; then
    echo "$(ts) /config/freebox_auth.conf doesn't exist or is empty"
    echo "$(ts) Asking an application authorization to the freebox"
-   source freeboxos_bash_api.sh
+   source /files/freeboxos_bash_api.sh
    if authorize_application  'docker-freebox-filebot'  'Docker Freebox FileBot'  '1.0.0'  'docker-container' > /config/freebox_auth.conf; then
     return 0
    else
@@ -29,7 +29,7 @@ if authorize_application; then
  # get freebox conf
  source /config/freebox.conf
  # source the freeboxos-bash-api
- source freeboxos_bash_api.sh
+ source /files/freeboxos_bash_api.sh
  # login
  if login_freebox "$MY_APP_ID" "$MY_APP_TOKEN"; then
   echo "$(ts) Successfully logged"
