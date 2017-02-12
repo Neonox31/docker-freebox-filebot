@@ -23,6 +23,9 @@ RUN add-apt-repository ppa:webupd8team/java \
 # Install jq for freebox script
 RUN apt-get install -y jq
 
+# Install dos2unix
+RUN apt-get install -y dos2unix
+
 # Create dir to keep things tidy. Make sure it's readable by $USER_ID
 RUN mkdir /files
 RUN chmod a+rwX /files
@@ -47,14 +50,18 @@ RUN chmod a+wx /files/freeboxos_bash_api.sh
 # Add scripts. Make sure start.sh, pre-run.sh, and filebot.sh are executable by $USER_ID
 ADD pre-run.sh /files/pre-run.sh
 RUN chmod a+x /files/pre-run.sh
+RUN dos2unix /files/pre-run.sh
 ADD start.sh /files/start.sh
 RUN chmod a+x /files/start.sh
+RUN dos2unix /files/start.sh
 ADD filebot.sh /files/filebot.sh
 RUN chmod a+wx /files/filebot.sh
+RUN dos2unix /files/filebot.sh
 ADD filebot.conf /files/filebot.conf
 RUN chmod a+wx /files/filebot.conf
 ADD freebox.sh /files/freebox.sh
 RUN chmod a+wx /files/freebox.sh
+RUN dos2unix /files/freebox.sh
 #ADD freebox.conf /files/freebox.conf
 #RUN chmod a+wx /files/freebox.conf
 
