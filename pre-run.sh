@@ -1,5 +1,3 @@
-# https://raw.githubusercontent.com/coppit/docker-filebot/master/pre-run.sh
-
 # Download any scripts
 for SCRIPT_TO_DOWNLOAD in ${SCRIPTS_TO_DOWNLOAD[@]}
 do

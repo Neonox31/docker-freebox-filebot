@@ -1,5 +1,3 @@
-# https://raw.githubusercontent.com/coppit/docker-filebot/master/filebot.sh
-
 #!/bin/bash
 
 # This script by default uses "Automated Media Center" (AMC). See the final filebot call below. For more docs on AMC,

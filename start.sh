@@ -1,5 +1,3 @@
-# https://raw.githubusercontent.com/coppit/docker-filebot/master/start.sh
-
 #!/bin/bash
 
 function ts {
