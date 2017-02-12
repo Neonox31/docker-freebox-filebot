@@ -62,8 +62,8 @@ RUN chmod a+wx /files/filebot.conf
 ADD freebox.sh /files/freebox.sh
 RUN chmod a+wx /files/freebox.sh
 RUN dos2unix /files/freebox.sh
-#ADD freebox.conf /files/freebox.conf
-#RUN chmod a+wx /files/freebox.conf
+ADD freebox.conf /files/freebox.conf
+RUN chmod a+wx /files/freebox.conf
 
 ENV USER_ID 0
 ENV GROUP_ID 0
