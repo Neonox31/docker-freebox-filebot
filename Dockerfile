@@ -41,6 +41,7 @@ VOLUME ["/freebox", "/completed", "/output", "/config"]
 # Rev-locking this to ensure reproducible builds
 RUN wget -O /files/runas.sh \
   'https://raw.githubusercontent.com/coppit/docker-inotify-command/7be05137c367a7bbff6b7980aa14e8af0c24eca6/runas.sh'
+RUN chmod a+wx /files/runas.sh
 
 # Get freeboxOS API script
 RUN wget -O /files/freeboxos_bash_api.sh \
@@ -59,11 +60,13 @@ RUN chmod a+wx /files/filebot.sh
 RUN dos2unix /files/filebot.sh
 ADD filebot.conf /files/filebot.conf
 RUN chmod a+wx /files/filebot.conf
+RUN dos2unix /files/filebot.conf
 ADD freebox.sh /files/freebox.sh
 RUN chmod a+wx /files/freebox.sh
 RUN dos2unix /files/freebox.sh
 ADD freebox.conf /files/freebox.conf
 RUN chmod a+wx /files/freebox.conf
+RUN dos2unix /files/freebox.sh
 
 ENV USER_ID 0
 ENV GROUP_ID 0
