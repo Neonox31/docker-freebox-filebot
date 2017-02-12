@@ -7,6 +7,7 @@ function ts {
 #-----------------------------------------------------------------------------------------------------------------------
 
 function authorize_application {
+ echo "$(ts) authorize app"
  if [ ! -f /config/freebox_auth.conf ] || [ ! -s /config/freebox_auth.conf ]; then
    echo "$(ts) /config/freebox_auth.conf doesn't exist or is empty"
    echo "$(ts) Asking an application authorization to the freebox"
@@ -23,6 +24,7 @@ function authorize_application {
 
 #-----------------------------------------------------------------------------------------------------------------------
 
+echo "$(ts) freebox script"
 if authorize_application; then
  # get app ID and token
  source /config/freebox_auth.conf
@@ -43,6 +45,7 @@ if authorize_application; then
   done
   echo "$(ts) Start filebot script"
   /files/runas.sh $USER_ID $GROUP_ID $UMASK /files/filebot.sh &
+  exit 0
  fi
 else
    echo "$(ts) fail"
