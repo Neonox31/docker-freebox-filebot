@@ -10,8 +10,7 @@ function ts {
 
 function initialize_configuration {
   # Initialize filebot script
-  if [ ! -f /config/filebot.conf ]
-  then
+  if [ ! -f /config/filebot.conf ]; then
     echo "$(ts) Creating /config/filebot.conf.new"
     cp /files/filebot.conf /config/filebot.conf.new
     chmod a+w /config/filebot.conf.new
@@ -22,8 +21,7 @@ function initialize_configuration {
   fi
 
   # Initialize freebox script
-  if [ ! -f /config/freebox.conf ]
-  then
+  if [ ! -f /config/freebox.conf ]; then
     echo "$(ts) Creating /config/freebox.conf.new"
     cp /files/freebox.conf /config/freebox.conf.new
     chmod a+w /config/freebox.conf.new
