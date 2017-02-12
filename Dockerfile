@@ -20,6 +20,9 @@ RUN add-apt-repository ppa:webupd8team/java \
   && apt-get update \
   && apt-get install -y oracle-java8-installer
 
+# Install jq for freebox script
+RUN apt-get install -y jq
+
 # Create dir to keep things tidy. Make sure it's readable by $USER_ID
 RUN mkdir /files
 RUN chmod a+rwX /files
@@ -30,7 +33,7 @@ RUN set -x \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-VOLUME ["/downloads", "/completed", "/output", "/config"]
+VOLUME ["/freebox", "/completed", "/output", "/config"]
 
 # Rev-locking this to ensure reproducible builds
 RUN wget -O /files/runas.sh \
@@ -47,6 +50,12 @@ ADD start.sh /files/start.sh
 RUN chmod a+x /files/start.sh
 ADD filebot.sh /files/filebot.sh
 RUN chmod a+wx /files/filebot.sh
+ADD filebot.conf /files/filebot.conf
+RUN chmod a+wx /files/filebot.conf
+ADD freebox.sh /files/freebox.sh
+RUN chmod a+wx /files/freebox.sh
+ADD freebox.conf /files/freebox.conf
+RUN chmod a+wx /files/freebox.conf
 ADD freeboxos_bash_api.sh /files/freeboxos_bash_api.sh
 RUN chmod a+wx /files/freeboxos_bash_api.sh
 
