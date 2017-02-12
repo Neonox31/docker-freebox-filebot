@@ -53,5 +53,4 @@ setup_opensubtitles_account
 
 # Run once at the start
 echo "$(ts) Running Freebox script on startup"
-/files/runas.sh $USER_ID $GROUP_ID $UMASK /files/freebox.sh &
-
+/files/runas.sh $USER_ID $GROUP_ID $UMASK /files/freebox.sh
