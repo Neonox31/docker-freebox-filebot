@@ -42,6 +42,7 @@ RUN wget -O /files/runas.sh \
 # Get freeboxOS API script
 RUN wget -O /files/freeboxos_bash_api.sh \
   'http://github.com/JrCs/freeboxos-bash-api/raw/master/freeboxos_bash_api.sh'
+RUN chmod a+wx /files/freeboxos_bash_api.sh
 
 # Add scripts. Make sure start.sh, pre-run.sh, and filebot.sh are executable by $USER_ID
 ADD pre-run.sh /files/pre-run.sh
@@ -56,8 +57,6 @@ ADD freebox.sh /files/freebox.sh
 RUN chmod a+wx /files/freebox.sh
 #ADD freebox.conf /files/freebox.conf
 #RUN chmod a+wx /files/freebox.conf
-ADD freeboxos_bash_api.sh /files/freeboxos_bash_api.sh
-RUN chmod a+wx /files/freeboxos_bash_api.sh
 
 ENV USER_ID 0
 ENV GROUP_ID 0
