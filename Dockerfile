@@ -48,7 +48,7 @@ RUN wget -O /files/freeboxos_bash_api.sh \
   'http://github.com/JrCs/freeboxos-bash-api/raw/master/freeboxos_bash_api.sh'
 RUN chmod a+wx /files/freeboxos_bash_api.sh
 
-# Add scripts. Make sure start.sh, pre-run.sh, and filebot.sh are executable by $USER_ID
+# Add scripts. Make sure scripts and confs are executable by $USER_ID
 ADD pre-run.sh /files/pre-run.sh
 RUN chmod a+x /files/pre-run.sh
 RUN dos2unix /files/pre-run.sh
@@ -60,13 +60,11 @@ RUN chmod a+wx /files/filebot.sh
 RUN dos2unix /files/filebot.sh
 ADD filebot.conf /files/filebot.conf
 RUN chmod a+wx /files/filebot.conf
-RUN dos2unix /files/filebot.conf
 ADD freebox.sh /files/freebox.sh
 RUN chmod a+wx /files/freebox.sh
 RUN dos2unix /files/freebox.sh
 ADD freebox.conf /files/freebox.conf
 RUN chmod a+wx /files/freebox.conf
-RUN dos2unix /files/freebox.sh
 
 ENV USER_ID 0
 ENV GROUP_ID 0
