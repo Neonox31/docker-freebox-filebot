@@ -6,7 +6,7 @@ function ts {
 
 #-----------------------------------------------------------------------------------------------------------------------
 
-function authorize_application {
+function authorize {
  if [ ! -f /config/freebox_auth.conf ]; then
    echo "$(ts) /config/freebox_auth.conf missing"
    echo "$(ts) Asking freebox for an application authorization"
@@ -33,7 +33,7 @@ source /files/freeboxos_bash_api.sh
 
 while true
 do
-    if authorize_application; then
+    if authorize; then
      # Get app ID and token
      source /config/freebox_auth.conf
      # Login
