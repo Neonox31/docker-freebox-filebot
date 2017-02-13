@@ -7,8 +7,8 @@ function ts {
 #-----------------------------------------------------------------------------------------------------------------------
 
 function authorize_application {
- if [ ! -f /config/freebox_auth.conf ] || [ ! -s /config/freebox_auth.conf ]; then
-   echo "$(ts) /config/freebox_auth.conf missing or is empty"
+ if [ ! -f /config/freebox_auth.conf ]; then
+   echo "$(ts) /config/freebox_auth.conf missing"
    echo "$(ts) Asking freebox for an application authorization"
    source /files/freeboxos_bash_api.sh
    if authorize_application  'docker-freebox-filebot'  'Docker Freebox FileBot'  '1.0.0'  'docker-container' > /config/freebox_auth.conf; then
@@ -18,21 +18,24 @@ function authorize_application {
     echo "$(ts) /config/freebox_auth.conf deleted"
     return 1
    fi
+ else
+   echo "$(ts) /config/freebox_auth.conf found, bypass authorisation process"
  fi
  return 0
 }
 
 #-----------------------------------------------------------------------------------------------------------------------
 
+# Get freebox conf
+source /config/freebox.conf
+# Source the freeboxos-bash-api
+source /files/freeboxos_bash_api.sh
+
 while true
 do
     if authorize_application; then
      # Get app ID and token
      source /config/freebox_auth.conf
-     # Get freebox conf
-     source /config/freebox.conf
-     # Source the freeboxos-bash-api
-     source /files/freeboxos_bash_api.sh
      # Login
      if login_freebox "$MY_APP_ID" "$MY_APP_TOKEN"; then
       echo "$(ts) New session opened on the freebox for $MY_APP_ID application"
@@ -53,6 +56,8 @@ do
       else
         echo "$(ts) No completed download detected"
       fi
+     else
+       echo "$(ts) Opening session failed"
      fi
     else
        echo "$(ts) Application authorization failed"
