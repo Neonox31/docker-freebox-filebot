@@ -37,6 +37,7 @@ do
      # Get app ID and token
      source /config/freebox_auth.conf
      # Login
+     echo "$(ts) $MY_APP_ID $MY_APP_TOKEN"
      if login_freebox "$MY_APP_ID" "$MY_APP_TOKEN"; then
       echo "$(ts) New session opened on the freebox for $MY_APP_ID application"
       # Get completed downloads
