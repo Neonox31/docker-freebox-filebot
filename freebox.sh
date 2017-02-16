@@ -26,43 +26,47 @@ function authorize {
 
 #-----------------------------------------------------------------------------------------------------------------------
 
-# Get freebox conf
-source /config/freebox.conf
-# Source the freeboxos-bash-api
-source /files/freeboxos_bash_api.sh
+function run {
+ # Get freebox conf
+ source /config/freebox.conf
+ # Source the freeboxos-bash-api
+ source /files/freeboxos_bash_api.sh
 
-if authorize; then
- # Get app ID and token
- source /config/freebox_auth.conf
- # Login
- echo "$(ts) $MY_APP_ID $MY_APP_TOKEN"
- if login_freebox "$MY_APP_ID" "$MY_APP_TOKEN"; then
-  echo "$(ts) New session opened on the freebox for $MY_APP_ID application"
-  while true
-   do
-    # Get completed downloads
-    answer=$(call_freebox_api 'downloads/')
-    echo "$(ts) Downloads request result : $answer"
-    # Filter only done or seeding downloads
-    files=($(echo "$answer" | jq -r '.result[] | select(.status == "done" or .status == "seeding") | .name'))
-    if [ ${#files[@]} -ne 0 ]; then
-     for file in ${files[@]}
-      do
-       echo "$(ts) New completed download detected : $file"
-       echo "$(ts) Copy /freebox/$file to /completed/$file"
-       cp -rf "/freebox//$file" "/completed/$file"
-      done
-      echo "$(ts) Starting filebot script"
-      /files/runas.sh $USER_ID $GROUP_ID $UMASK /files/filebot.sh
-    else
-     echo "$(ts) No completed download detected"
-    fi
-   echo "$(ts) Wait for $LOOP_DELAY seconds..."
-   sleep $LOOP_DELAY
-  done
+ if authorize; then
+  # Get app ID and token
+  source /config/freebox_auth.conf
+  # Login
+  echo "$(ts) $MY_APP_ID $MY_APP_TOKEN"
+  if login_freebox "$MY_APP_ID" "$MY_APP_TOKEN"; then
+   echo "$(ts) New session opened on the freebox for $MY_APP_ID application"
+   while true
+    do
+     # Get completed downloads
+     answer=$(call_freebox_api 'downloads/')
+     echo "$(ts) Downloads request result : $answer"
+     # Filter only done or seeding downloads
+     files=($(echo "$answer" | jq -r '.result[] | select(.status == "done" or .status == "seeding") | .name'))
+     if [ ${#files[@]} -ne 0 ]; then
+      for file in ${files[@]}
+       do
+        echo "$(ts) New completed download detected : $file"
+        echo "$(ts) Copy /freebox/$file to /completed/$file"
+        cp -rf "/freebox//$file" "/completed/$file"
+       done
+       echo "$(ts) Starting filebot script"
+       /files/runas.sh $USER_ID $GROUP_ID $UMASK /files/filebot.sh
+     else
+      echo "$(ts) No completed download detected"
+     fi
+     echo "$(ts) Wait for $LOOP_DELAY seconds..."
+     sleep $LOOP_DELAY
+    done
+  else
+   echo "$(ts) Opening session failed"
+   run
+  fi
  else
-  echo "$(ts) Opening session failed"
+  echo "$(ts) Application authorization failed"
+  run
  fi
-else
- echo "$(ts) Application authorization failed"
-fi
+}
