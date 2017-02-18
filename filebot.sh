@@ -19,7 +19,8 @@ fi
 . /files/pre-run.sh
 
 # See http://www.filebot.net/forums/viewtopic.php?t=215 for details on amc
-filebot -script fn:amc -no-xattr --output /output --log-file /files/amc.log --action "$ACTION" --conflict auto \
-  -non-strict --def ut_dir=/completed ut_kind=multi music=n deleteAfterExtract=y clean=y pushover="$PUSHOVER" \
+filebot -script fn:amc -no-xattr --output /output --log-file /files/amc.log --action "$ACTION" --lang="$LANG" --conflict auto \
+  -non-strict --def ut_dir=/completed ut_kind=multi music=n deleteAfterExtract=y clean=y \
+  gmail="$GMAIL" mailto="$MAILTO" pushover="$PUSHOVER" plex="$PLEX" \
   excludeList=/config/amc-exclude-list.txt $SUBTITLE_OPTION \
   movieFormat="$MOVIE_FORMAT" musicFormat="$MUSIC_FORMAT" seriesFormat="$SERIES_FORMAT"
