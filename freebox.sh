@@ -78,7 +78,7 @@ function fb_manage_completed_dls {
      if cp -rf /freebox/"${file}" /completed/"${file}"; then
       echo "$(ts) [DEBUG] Add ${file} to freebox exclude list"
       echo "$file" >> /config/fb-exclude-list.txt
-      $has_new_files=true
+      has_new_files=true
      fi
     else
      echo "$(ts) [WARN] $file found in freebox exclude list, ignoring"
