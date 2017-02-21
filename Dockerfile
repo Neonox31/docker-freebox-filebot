@@ -15,10 +15,11 @@ RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup \
 # Auto-accept Oracle JDK license
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 
-# Filebot needs Java 8
+# Filebot needs Java 8 and mediainfo library
 RUN add-apt-repository ppa:webupd8team/java \
   && apt-get update \
-  && apt-get install -y oracle-java8-installer
+  && apt-get install -y oracle-java8-installer \
+  && apt-get install -y libmediainfo-dev
 
 # Install jq for freebox script
 RUN apt-get install -y jq
