@@ -1,0 +1,11 @@
+version: '2'
+services:
+  freebox-filebot:
+    image: neonox31/freebox-filebot:latest
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /media/freebox/Téléchargements/:/freebox
+      - /media/freebox/Téléchargements/Terminés/:/completed
+      - /media/diskstation/output/:/output
+      - /srv/docker/freebox-filebot/config/:/config
