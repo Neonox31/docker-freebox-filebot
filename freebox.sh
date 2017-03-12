@@ -69,7 +69,7 @@ function fb_manage_completed_dls {
   echo "$(ts) [INFO] No completed downloads detected"
  else
   local has_new_files=false
-  for file in "$files"
+  for file in "${files[@]}"
    do
     echo "$(ts) [INFO] New completed download detected : ${file}"
     if ! grep -Fxq "$file" /config/fb-exclude-list.txt; then
@@ -99,7 +99,7 @@ function fb_manage_seeded_dls {
  if [ -z "$ids" ] || [ ${#ids[@]} -eq 0 ]; then
   echo "$(ts) [INFO] No seeded downloads detected"
  else
-  for id in "$ids"
+  for id in "${ids[@]}"
    do
     echo "$(ts) [INFO] New seeded download detected : ${id}, try to erase it"
     local answer_delete=$(fb_call_freebox_api "/downloads/${id}/erase" "DELETE")
