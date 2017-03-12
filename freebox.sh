@@ -64,7 +64,9 @@ function fb_iterate {
 
 function fb_manage_completed_dls {
  # Filter only done or seeding downloads
- local files=$(echo "$1" | jq -r '.result[]? | select(.status == "seeding") | .name')
+ OLDIFS=$IFS
+ IFS=$'\n' read -r -d '' -a files < <(set -o pipefail; echo "$1" | jq -r '.result[]? | select(.status == "seeding") | .name' && printf '\0')
+ IFS=$OLDIFS
  if [ -z "$files" ] || [ ${#files[@]} -eq 0 ]; then
   echo "$(ts) [INFO] No completed downloads detected"
  else
@@ -95,7 +97,9 @@ function fb_manage_completed_dls {
 
 function fb_manage_seeded_dls {
  # Filter only done or seeding downloads
- local ids=$(echo "$1" | jq -r '.result[]? | select(.status == "done") | .id')
+ OLDIFS=$IFS
+ IFS=$'\n' read -r -d '' -a ids < <(set -o pipefail; echo "$1" | jq -r '.result[]? | select(.status == "done") | .id' && printf '\0')
+ IFS=$OLDIFS
  if [ -z "$ids" ] || [ ${#ids[@]} -eq 0 ]; then
   echo "$(ts) [INFO] No seeded downloads detected"
  else
